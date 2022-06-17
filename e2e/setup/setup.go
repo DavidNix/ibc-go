@@ -3,6 +3,8 @@ package setup
 import (
 	"context"
 	"fmt"
+	"testing"
+
 	"github.com/cosmos/ibc-go/v3/e2e/testconfig"
 	"github.com/strangelove-ventures/ibctest"
 	"github.com/strangelove-ventures/ibctest/chain/cosmos"
@@ -10,7 +12,6 @@ import (
 	"github.com/strangelove-ventures/ibctest/testreporter"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/zap/zaptest"
-	"testing"
 )
 
 // StandardTwoChainEnvironment creates two default simapp containers as well as a go relayer container.
@@ -72,16 +73,16 @@ type Options struct {
 }
 
 func defaultSetupOpts() *Options {
-	chainAConfig := newSimappConfig("simapp-a", "chain-a", "atoma")
-	chainBConfig := newSimappConfig("simapp-b", "chain-b", "atomb")
+	chainAConfig := NewSimappConfig("simapp-a", "chain-a", "atoma")
+	chainBConfig := NewSimappConfig("simapp-b", "chain-b", "atomb")
 	return &Options{
 		ChainAConfig: &chainAConfig,
 		ChainBConfig: &chainBConfig,
 	}
 }
 
-// newSimappConfig creates an ibc configuration for simd.
-func newSimappConfig(name, chainId, denom string) ibc.ChainConfig {
+// NewSimappConfig creates an ibc configuration for simd.
+func NewSimappConfig(name, chainId, denom string) ibc.ChainConfig {
 	tc := testconfig.FromEnv()
 	return ibc.ChainConfig{
 		Type:    "cosmos",
